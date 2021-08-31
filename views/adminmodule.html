@@ -1,0 +1,45 @@
+{{define "meta"}}
+
+{{end}}
+{{define "styles"}}
+<link rel="stylesheet" href="/assets/lambda/fonts/flaticons/flaticons.css">
+<link rel="stylesheet" href="/assets/lambda/fonts/themify/themify-icons.css">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/moqup.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/dataform.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/datagrid.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/datasource.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/chart.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/agent.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/krud.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/adminmodule.css"}}">
+{{end}}
+{{define "app"}}
+<div id="puzzle" class="app-wrapper"></div>
+{{end}}
+{{define "scripts"}}
+<script type="text/javascript" src="/vendor/echart/echarts-en.js"></script>
+<script type="text/javascript" src="/vendor/ckeditor/ckeditor.js"></script>
+<script>
+    window.init = {
+        user: {{.User}},
+        app_logo:{{.app_logo}},
+        app_text:{{.app_text}},
+        dbSchema: {{.dbSchema}},
+        gridList: {{.gridList}},
+        user_fields: {{.user_fields}},
+        user_roles: {{.user_roles}},
+        data_form_custom_elements: {{.data_form_custom_elements}}
+    };
+</script>
+<script src="{{index .mix "/assets/lambda/js/moqup.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/dataform.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/dataform-builder.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/datagrid-vendor.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/datagrid.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/datagrid-builder.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/datasource.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/chart.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/krud.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/agent.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/adminmodule.js"}}"></script>
+{{end}}
