@@ -11,7 +11,7 @@ go 1.15
 
 require (
 	github.com/labstack/echo/v4 v4.5.0
-	github.com/lambda-platform/agent v0.2.1
+	github.com/lambda-platform/agent v0.2.2
 	github.com/lambda-platform/dataform v0.2.0
 	github.com/lambda-platform/datagrid v0.2.0
 	github.com/lambda-platform/datasource v0.2.0
