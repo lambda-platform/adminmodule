@@ -95,7 +95,7 @@ func UploadDBSCHEMA(c echo.Context) error {
 	DBSchema.GenerateSchemaForCloud()
 
 
-	url := "http://localhost/console/upload/"+config.LambdaConfig.ProjectKey
+	url := "https://lambda.cloud.mn/console/upload/"+config.LambdaConfig.ProjectKey
 	method := "POST"
 
 	payload := &bytes.Buffer{}
@@ -161,7 +161,7 @@ func ASyncFromCloud(c echo.Context) error {
 
 
 
-	url := "http://localhost/console/project-data/"+config.LambdaConfig.ProjectKey
+	url := "https://lambda.cloud.mn/console/project-data/"+config.LambdaConfig.ProjectKey
 
 	method := "GET"
 
@@ -278,7 +278,7 @@ func ReBuild() {
 }
 
 func DownloadGeneratedCodes() error{
-	url := "http://localhost/console/get-codes/"+config.LambdaConfig.ProjectKey
+	url := "https://lambda.cloud.mn/console/get-codes/"+config.LambdaConfig.ProjectKey
 
 	resp, err := http.Get(url)
 	if err != nil {
