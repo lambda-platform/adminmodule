@@ -11,6 +11,7 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	"github.com/lambda-platform/lambda/models"
 	"github.com/lambda-platform/lambda/DBSchema"
+	"os/exec"
 
 	"github.com/lambda-platform/lambda/config"
 	"github.com/labstack/echo/v4"
@@ -248,6 +249,7 @@ func ASyncFromCloud(c echo.Context) error {
 				"msg": unzip,
 			})
 		} else {
+			ReBuild()
 			return c.Render(http.StatusOK, "sync_success.html", map[string]interface{}{
 				"status": true,
 			})
@@ -257,6 +259,24 @@ func ASyncFromCloud(c echo.Context) error {
 
 
 }
+func ReBuild() {
+	//bytes, err1 := exec.Command("killall", "lambda-starter").Output()
+	//output := string(bytes)
+	//fmt.Println(output)
+	//if err1 != nil {
+	//	fmt.Println(err1)
+	//}
+
+	dir, _ := os.Getwd()
+	fmt.Println(dir)
+	out, err := exec.Command("/bin/bash",  dir+"/script-build.sh").Output()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("The date is %s", out)
+
+}
+
 func DownloadGeneratedCodes() error{
 	url := "http://localhost/console/get-codes/"+config.LambdaConfig.ProjectKey
 
