@@ -49,7 +49,7 @@
 
         <tr>
             <td style="padding: 15px 24px;">
-                <a href="window.close();" style="padding: 8px 20px; outline: none; text-decoration: none; font-size: 16px; letter-spacing: 0.5px; transition: all 0.3s; font-weight: 600; border-radius: 6px; background-color: #2f55d4; border: 1px solid #2f55d4; color: #ffffff;">Хаах</a>
+                <a href="javascript:closeWindow();" style="padding: 8px 20px; outline: none; text-decoration: none; font-size: 16px; letter-spacing: 0.5px; transition: all 0.3s; font-weight: 600; border-radius: 6px; background-color: #2f55d4; border: 1px solid #2f55d4; color: #ffffff;">Хаах</a>
             </td>
         </tr>
 
@@ -64,5 +64,11 @@
     </table>
 </div>
 <!-- Hero End -->
+<script>
+    function closeWindow() {
+        window.open('','_parent','');
+        window.close();
+    }
+</script>
 </body>
 </html>

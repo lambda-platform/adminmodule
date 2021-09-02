@@ -240,7 +240,7 @@ func ASyncFromCloud(c echo.Context) error {
 		})
 	} else {
 
-		var unzip error = UnZipLambdaCodes();
+		var unzip error = UnZipLambdaCodes()
 
 
 		if(unzip != nil){
@@ -269,7 +269,8 @@ func ReBuild() {
 
 	dir, _ := os.Getwd()
 	fmt.Println(dir)
-	out, err := exec.Command("/bin/bash",  dir+"/script-build.sh").Output()
+	out, err := exec.Command("/bin/sh",  dir+"/script-build.sh").Output()
+
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -420,6 +421,10 @@ func UnZipLambdaCodes() error{
 			if err != nil {
 				return  err
 			}
+		}
+		e := os.Remove(src)
+		if e != nil {
+			return e
 		}
 		return nil
 	}
