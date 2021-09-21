@@ -69,6 +69,7 @@ func Index(c echo.Context) error {
 	csrfToken := ""
 	return c.Render(http.StatusOK, "adminmodule.html", map[string]interface{}{
 		"title":                     config.LambdaConfig.Title,
+		"lambda_config": config.LambdaConfig,
 		"favicon":                     config.LambdaConfig.Favicon,
 		"app_logo":                     config.LambdaConfig.Logo,
 		"app_text":                     "СИСТЕМИЙН УДИРДЛАГА",
@@ -191,10 +192,11 @@ func ASyncFromCloud(c echo.Context) error {
 			"status": "false",
 		})
 	}
+	fmt.Println("=============== HERE 1")
 
 	data := CloudData{}
 	json.Unmarshal(body, &data)
-
+	fmt.Println("=============== HERE 2")
 	DSVBS := []models.VBSchema{}
 	FormVbs := []models.VBSchema{}
 	GridVbs := []models.VBSchema{}
@@ -208,10 +210,12 @@ func ASyncFromCloud(c echo.Context) error {
 	json.Unmarshal([]byte(GridSchemasJSON), &GridVbs)
 	json.Unmarshal([]byte(MenuSchemasJSON), &MenuVbs)
 	json.Unmarshal([]byte(KrudJSON), &cruds)
-
+	fmt.Println("=============== HERE 3")
 	DB.DB.Where("type = ?", "datasource").Find(&DSVBS)
+	fmt.Println("=============== HERE 3.1")
 	DB.DB.Exec("TRUNCATE krud")
 	DB.DB.Exec("TRUNCATE vb_schemas")
+	fmt.Println("=============== HERE 4")
 	for _, vb := range FormVbs {
 		DB.DB.Create(&vb)
 	}
@@ -230,9 +234,9 @@ func ASyncFromCloud(c echo.Context) error {
 
 		DB.DB.Create(&crud)
 	}
-
+	fmt.Println("=============== HERE 5")
 	var downloadError error = DownloadGeneratedCodes()
-
+	fmt.Println("=============== HERE 6")
 	if(downloadError != nil){
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": false,
