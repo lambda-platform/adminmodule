@@ -192,30 +192,33 @@ func ASyncFromCloud(c echo.Context) error {
 			"status": "false",
 		})
 	}
-	fmt.Println("=============== HERE 1")
+
 
 	data := CloudData{}
 	json.Unmarshal(body, &data)
-	fmt.Println("=============== HERE 2")
+
 	DSVBS := []models.VBSchema{}
 	FormVbs := []models.VBSchema{}
 	GridVbs := []models.VBSchema{}
 	MenuVbs := []models.VBSchema{}
+	ChartVbs := []models.VBSchema{}
 	cruds := []krudModels.Krud{}
 	FormSchemasJSON, _ := json.Marshal(data.FormSchemas)
 	GridSchemasJSON, _ := json.Marshal(data.GridSchemas)
 	MenuSchemasJSON, _ := json.Marshal(data.MenuSchemas)
+	ChartSchemasJSON, _ := json.Marshal(data.ChartSchemas)
 	KrudJSON, _ := json.Marshal(data.Cruds)
 	json.Unmarshal([]byte(FormSchemasJSON), &FormVbs)
 	json.Unmarshal([]byte(GridSchemasJSON), &GridVbs)
 	json.Unmarshal([]byte(MenuSchemasJSON), &MenuVbs)
+	json.Unmarshal([]byte(ChartSchemasJSON), &ChartVbs)
 	json.Unmarshal([]byte(KrudJSON), &cruds)
-	fmt.Println("=============== HERE 3")
+
 	DB.DB.Where("type = ?", "datasource").Find(&DSVBS)
-	fmt.Println("=============== HERE 3.1")
+
 	DB.DB.Exec("TRUNCATE krud")
 	DB.DB.Exec("TRUNCATE vb_schemas")
-	fmt.Println("=============== HERE 4")
+
 	for _, vb := range FormVbs {
 		DB.DB.Create(&vb)
 	}
@@ -223,6 +226,9 @@ func ASyncFromCloud(c echo.Context) error {
 		DB.DB.Create(&vb)
 	}
 	for _, vb := range MenuVbs {
+		DB.DB.Create(&vb)
+	}
+	for _, vb := range ChartVbs {
 		DB.DB.Create(&vb)
 	}
 	for _, vb := range DSVBS {
@@ -234,9 +240,9 @@ func ASyncFromCloud(c echo.Context) error {
 
 		DB.DB.Create(&crud)
 	}
-	fmt.Println("=============== HERE 5")
+
 	var downloadError error = DownloadGeneratedCodes()
-	fmt.Println("=============== HERE 6")
+
 	if(downloadError != nil){
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": false,
@@ -470,6 +476,13 @@ type CloudData struct {
 		Schema     string `json:"schema"`
 		Type       string `json:"type"`
 	} `json:"menu-schemas"`
+	ChartSchemas []struct {
+		ID         int    `json:"id"`
+		Name       string `json:"name"`
+		ProjectsID int    `json:"projects_id"`
+		Schema     string `json:"schema"`
+		Type       string `json:"type"`
+	} `json:"chart-schemas"`
 }
 func GridVB(GetGridMODEL func(schema_id string) (interface{}, interface{}, string, string, interface{}, string)) echo.HandlerFunc {
 	return func(c echo.Context) error {
