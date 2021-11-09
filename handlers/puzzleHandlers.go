@@ -78,6 +78,7 @@ func Index(c echo.Context) error {
 		"user_fields":               config.LambdaConfig.UserDataFields,
 		"user_roles":               userRoles,
 		"data_form_custom_elements": config.LambdaConfig.DataFormCustomElements,
+		"data_grid_custom_elements": config.LambdaConfig.DataGridCustomElements,
 		"mix":                       utils.Mix,
 		"csrfToken":                       csrfToken,
 	})
