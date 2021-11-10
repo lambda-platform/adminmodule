@@ -98,6 +98,7 @@ func UploadDBSCHEMA(c echo.Context) error {
 
 
 	url := "https://lambda.cloud.mn/console/upload/"+config.LambdaConfig.ProjectKey
+	//url := "http://localhost/console/upload/"+config.LambdaConfig.ProjectKey
 	method := "POST"
 
 	payload := &bytes.Buffer{}
@@ -109,6 +110,19 @@ func UploadDBSCHEMA(c echo.Context) error {
 	_, errFile1 = io.Copy(part1, file)
 	if errFile1 != nil {
 		fmt.Println(errFile1)
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"status": "false",
+		})
+	}
+
+
+	file2, errFile2 := os.Open("lambda.json")
+	defer file2.Close()
+	part2,
+	errFile2 := writer.CreateFormFile("lambda_config",filepath.Base("lambda.json"))
+	_, errFile2 = io.Copy(part2, file2)
+	if errFile2 != nil {
+		fmt.Println(errFile2)
 		return c.JSON(http.StatusBadRequest, map[string]string{
 			"status": "false",
 		})
