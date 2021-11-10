@@ -97,8 +97,8 @@ func UploadDBSCHEMA(c echo.Context) error {
 	DBSchema.GenerateSchemaForCloud()
 
 
-	//url := "https://lambda.cloud.mn/console/upload/"+config.LambdaConfig.ProjectKey
-	url := "http://localhost/console/upload/"+config.LambdaConfig.ProjectKey
+	url := "https://lambda.cloud.mn/console/upload/"+config.LambdaConfig.ProjectKey
+	//url := "http://localhost/console/upload/"+config.LambdaConfig.ProjectKey
 	method := "POST"
 
 	payload := &bytes.Buffer{}
