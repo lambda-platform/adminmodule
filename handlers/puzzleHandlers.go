@@ -97,8 +97,8 @@ func UploadDBSCHEMA(c echo.Context) error {
 	DBSchema.GenerateSchemaForCloud()
 
 
-	url := "https://lambda.cloud.mn/console/upload/"+config.LambdaConfig.ProjectKey
-	//url := "http://localhost/console/upload/"+config.LambdaConfig.ProjectKey
+	//url := "https://lambda.cloud.mn/console/upload/"+config.LambdaConfig.ProjectKey
+	url := "http://localhost/console/upload/"+config.LambdaConfig.ProjectKey
 	method := "POST"
 
 	payload := &bytes.Buffer{}
@@ -217,16 +217,19 @@ func ASyncFromCloud(c echo.Context) error {
 	GridVbs := []models.VBSchema{}
 	MenuVbs := []models.VBSchema{}
 	ChartVbs := []models.VBSchema{}
+	MoqupVbs := []models.VBSchema{}
 	cruds := []krudModels.Krud{}
 	FormSchemasJSON, _ := json.Marshal(data.FormSchemas)
 	GridSchemasJSON, _ := json.Marshal(data.GridSchemas)
 	MenuSchemasJSON, _ := json.Marshal(data.MenuSchemas)
 	ChartSchemasJSON, _ := json.Marshal(data.ChartSchemas)
+	MoqupSchemasJSON, _ := json.Marshal(data.MoqupSchemas)
 	KrudJSON, _ := json.Marshal(data.Cruds)
 	json.Unmarshal([]byte(FormSchemasJSON), &FormVbs)
 	json.Unmarshal([]byte(GridSchemasJSON), &GridVbs)
 	json.Unmarshal([]byte(MenuSchemasJSON), &MenuVbs)
 	json.Unmarshal([]byte(ChartSchemasJSON), &ChartVbs)
+	json.Unmarshal([]byte(MoqupSchemasJSON), &MoqupVbs)
 	json.Unmarshal([]byte(KrudJSON), &cruds)
 
 	DB.DB.Where("type = ?", "datasource").Find(&DSVBS)
@@ -244,6 +247,9 @@ func ASyncFromCloud(c echo.Context) error {
 		DB.DB.Create(&vb)
 	}
 	for _, vb := range ChartVbs {
+		DB.DB.Create(&vb)
+	}
+	for _, vb := range MoqupVbs {
 		DB.DB.Create(&vb)
 	}
 	for _, vb := range DSVBS {
@@ -498,6 +504,13 @@ type CloudData struct {
 		Schema     string `json:"schema"`
 		Type       string `json:"type"`
 	} `json:"chart-schemas"`
+	MoqupSchemas []struct {
+		ID         int    `json:"id"`
+		Name       string `json:"name"`
+		ProjectsID int    `json:"projects_id"`
+		Schema     string `json:"schema"`
+		Type       string `json:"type"`
+	} `json:"moqup-schemas"`
 }
 func GridVB(GetGridMODEL func(schema_id string) (interface{}, interface{}, string, string, interface{}, string)) echo.HandlerFunc {
 	return func(c echo.Context) error {
