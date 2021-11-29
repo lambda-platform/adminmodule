@@ -16,6 +16,6 @@ require (
 	github.com/lambda-platform/datagrid v0.2.0
 	github.com/lambda-platform/datasource v0.2.0
 	github.com/lambda-platform/krud v0.2.0
-	github.com/lambda-platform/lambda v0.3.1
+	github.com/lambda-platform/lambda v0.3.2
 	github.com/lambda-platform/template v0.2.0
 )
